@@ -1,0 +1,6 @@
+http.host: "0.0.0.0"
+xpack.monitoring.elasticsearch.hosts: [ "http://[es-1]:9200", "http://[es-2]:9201" ] # Replace with your ElasticSearch instances
+xpack.monitoring.enabled: true
+pipeline.workers: 5
+queue.type: persisted
+queue.max_bytes: 100m

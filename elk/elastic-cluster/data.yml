@@ -1,0 +1,6 @@
+cluster.name: elk-cluster
+node.name: es1-data
+network.host: 0.0.0.0
+discovery.seed_hosts: ["[es-1]:9300", "[es-2]:9301"]  # Replace with your ElasticSearch instances
+cluster.initial_master_nodes: ["es1-master"] # Which node will be master
+node.roles: [ "data", "remote_cluster_client" ]
