@@ -1,0 +1,22 @@
+version: "3"
+services:
+  spam:
+    image: python
+    deploy:
+      replicas: 5
+      resources:
+        limits:
+          cpus: '0.05'
+          memory: 64M
+    volumes:
+      - ./data:/data
+    command: 
+      - "python3"
+      - "/data/spam.py"
+    environment:
+    - PYTHONUNBUFFERED=1
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://[nginx-address]:12209" # here must be reverse-proxy socket 
+        tag: "service"
