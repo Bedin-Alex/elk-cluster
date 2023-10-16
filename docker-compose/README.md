@@ -12,6 +12,8 @@ I've already commented all necessery moments. Just replace and run Docker Compos
 
 You're welcome
 
+---
+
 **Possible problems**
 
 If you see message about permissions (something like Permission denied, bla-bla-bla), you must change owner to current user:
@@ -28,6 +30,8 @@ To fix it you must run command below on docker host:
 
 `sudo sysctl -w vm.max_map_count=262144`
 
+
+---
 
 Bugs:
 
