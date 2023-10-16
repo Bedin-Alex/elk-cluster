@@ -29,3 +29,11 @@ To fix it you must run command below on docker host:
 `sudo sysctl -w vm.max_map_count=262144`
 
 
+Bugs:
+
+In case, when you've already created cluster of Elasticsearch, and if Master node had types: `master` and `data`, and then you decide to make another one node (ex. another data-node), you will catch Error with unavaiblity to set up connection between master node and data node.
+
+This problems caused by records in database of old ES (master/data node). Because master node also been and data. Beware of making master node as data node. 
+
+All what you need in this case - make this folder empty (ex. `rm -rf ./data-storage-master-node/*`)
+
