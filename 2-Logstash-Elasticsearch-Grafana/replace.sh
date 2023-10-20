@@ -16,3 +16,6 @@ find ./ -type f -exec sed -i "s/\[Loki-address\]/$loki/g" {} +
 
 mkdir ./logstash-elastic-grafana/data-grafana
 chmod 777 ./logstash-elastic-grafana/data-grafana
+
+mkdir ./logstash-elastic-grafana/data-elastic
+chmod 777 ./logstash-elastic-grafana/data-elastic
