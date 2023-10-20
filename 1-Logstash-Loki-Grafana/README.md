@@ -2,10 +2,12 @@
 
 Logstash, Loki, Grafana
 
+```
  ________      ________      ________      _________  
 |        |    |        |    |        |    |         |
 |Ext Data| -> |Logstash| -> |  Loki  | -> | Grafana |
-|________|    |________|    |________|    |_________| 
+|________|    |________|    |________|    |_________|
+```
 
 ./fake-traffic - is for emulation of external traffic (each 2 seconds will be sent a new message in logstash)
 

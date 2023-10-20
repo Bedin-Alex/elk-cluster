@@ -2,14 +2,17 @@
 
 Logstash, Elasticsearch, Kibana
 
+```
  __________      __________      _______________      _________  
 |          |    |          |    |               |    |         |
 | Ext Data | -> | Logstash | -> | Elasticsearch | -> |  Kibana |
 |__________|    |__________|    |_______________|    |_________| 
+```
 
 ./fake-traffic - is for emulation of external traffic (each 2 seconds will be sent a new message in logstash)
 
 ./logstash-elastic-kibana - is for filter, storage of logs, and show it in Kibana
+
 
 Just run this 2 dirs one after another and you will see the power of magic 😊
 
