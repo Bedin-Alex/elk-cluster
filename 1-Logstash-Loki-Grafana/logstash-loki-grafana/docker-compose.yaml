@@ -1,0 +1,47 @@
+version: '3.7'
+services:
+#======================= LOGSTASH =======================
+  logstash_case_1:
+    image: grafana/logstash-output-loki:main
+    container_name: logstash1
+    ports:
+     - "5044:5044"
+     - "9600:9600"
+     - "12201:12201/udp"
+    volumes:
+      - ./data-stash:/data-stash
+      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
+      - ./logstash.yaml:/usr/share/logstash/config/logstash.yml:ro
+    restart: always
+    networks:
+      - case1
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+#========================= LOKI =========================
+  loki_case_1:
+    image: grafana/loki
+    container_name: loki1
+    ports:
+      - 3100:3100
+    volumes:
+      - ./data-loki:/mnt/config
+    networks:
+      - case1
+#======================== GRAFANA ========================
+  grafana_case_1:
+    image: grafana/grafana
+    container_name: grafana1
+    volumes:
+      - './data-grafana:/var/lib/grafana'
+    ports:
+      - 3000:3000
+    networks:
+      - case1
+
+networks:
+  case1: 
+    driver: bridge
+
+

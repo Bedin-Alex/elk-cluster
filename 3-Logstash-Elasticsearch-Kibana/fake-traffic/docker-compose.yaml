@@ -1,0 +1,12 @@
+version: '3.7'
+services:
+  fake-traffic:
+    image: alpine:latest
+    container_name: fake-traffic
+    volumes:
+      - ./script.sh:/data/entrypoint.sh:ro
+    command: ash /data/entrypoint.sh
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://[Logstash-address]:12201" # Replace with your Logstash address

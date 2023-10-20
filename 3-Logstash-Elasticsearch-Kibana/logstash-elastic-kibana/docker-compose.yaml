@@ -1,0 +1,62 @@
+version: '3.7'
+services:
+#======================== LOGSTASH ========================
+  logstash_case_3:
+    image: grafana/logstash-output-loki:main
+    container_name: logstash3
+    ports:
+     - "5044:5044"
+     - "9600:9600"
+     - "12201:12201/udp"
+    volumes:
+      - ./data-stash:/data-stash
+      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
+      - ./logstash.yaml:/usr/share/logstash/config/logstash.yml:ro
+    restart: always
+    networks:
+      - case3
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+
+#====================== ELASTIC SEARCH ======================
+  elasticsearch_case_3:
+    image: elasticsearch:8.9.0
+    container_name: elasticsearch3
+    restart: always
+    environment:
+      - xpack.security.enabled=false
+    ulimits: 
+      memlock:
+        soft: -1 
+        hard: -1
+    volumes:
+      - ./data-elastic:/usr/share/elasticsearch/data
+      - ./elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+    ports:
+      - "9200:9200" # web-interface
+      - "9300:9300" # connection between cluster nodes
+    networks:
+        - case3 
+    logging:
+      options:
+        max-size: "100m"
+        max-file: "5"
+#====================== KIBANA ======================
+  kibana_case_3:
+    container_name: kibana3
+    image: kibana:8.9.0
+    restart: always
+    environment:
+      SERVER_NAME: kibana
+    ports:
+      - "5601:5601"
+    volumes:
+      - ./kibana.yml:/usr/share/kibana/config/kibana.yml:ro
+    networks:
+      - case3
+
+networks:
+  case3:
+    driver: bridge

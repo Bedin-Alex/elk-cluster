@@ -1,0 +1,58 @@
+version: '3.7'
+services:
+#======================== LOGSTASH ========================
+  logstash_case_2:
+    image: grafana/logstash-output-loki:main
+    container_name: logstash2
+    ports:
+     - "5044:5044"
+     - "9600:9600"
+     - "12201:12201/udp"
+    volumes:
+      - ./data-stash:/data-stash
+      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
+      - ./logstash.yaml:/usr/share/logstash/config/logstash.yml:ro
+    restart: always
+    networks:
+      - case2
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+#====================== ELASTIC SEARCH ======================
+  elasticsearch_case_2:
+    image: elasticsearch:8.9.0
+    container_name: elasticsearch2
+    restart: always
+    environment:
+      - xpack.security.enabled=false
+    ulimits: 
+      memlock:
+        soft: -1 
+        hard: -1
+    volumes:
+      - ./data-elastic:/usr/share/elasticsearch/data
+      - ./elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+    ports:
+      - "9200:9200" # web-interface
+      - "9300:9300" # connection between cluster nodes
+    networks:
+        - case2 
+    logging:
+      options:
+        max-size: "100m"
+        max-file: "5"
+#========================= GRAFANA =========================
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    volumes:
+      - './data-grafana:/var/lib/grafana'
+    ports:
+      - 3000:3000
+    networks:
+      - case2
+
+networks:
+  case2:
+    driver: bridge

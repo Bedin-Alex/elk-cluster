@@ -1,0 +1,5 @@
+# cluster.name: elk-cluster
+node.name: "elasticsearch3"
+network.host: 0.0.0.0
+cluster.initial_master_nodes: [ "elasticsearch3" ]
+
