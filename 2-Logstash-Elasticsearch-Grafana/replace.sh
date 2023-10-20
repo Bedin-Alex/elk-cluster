@@ -14,4 +14,5 @@ echo -e "Enter ${CYAN}Loki${NC} IP-address"
 read loki # [Loki-address]
 find ./ -type f -exec sed -i "s/\[Loki-address\]/$loki/g" {} +
 
+mkdir ./logstash-elastic-grafana/data-grafana
 chmod 777 ./logstash-elastic-grafana/data-grafana
